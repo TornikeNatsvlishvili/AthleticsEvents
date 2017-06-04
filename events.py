@@ -142,6 +142,7 @@ if __name__ == "__main__":
         sys.exit()
 
     if '-h' in sys.argv:
+        print('Usage: python events.py -d 14 -s 1')
         print('-d\tRequired\tnumber of days in the future to get events for')
         print('-s\tRequired\tseconds between requests')
         sys.exit()
