@@ -1,0 +1,6 @@
+env/
+events.ics
+.idea/
+.vscode/
+
+.DS_Store

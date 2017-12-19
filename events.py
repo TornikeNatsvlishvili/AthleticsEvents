@@ -73,11 +73,16 @@ LOCATIONS = {
     "97": '3205',
     "98": 'Red Rink',
     "99": 'Gold Rink',
-    "100": ' North 2',
-    "101": ' North 3',
-    "102": ' Half West Gym',
-    "103": ' AC 173'
+    "100": 'North 2',
+    "101": 'North 3',
+    "102": 'Half West Gym',
+    "103": 'AC 173'
 }
+
+EVENT_TITLE_WHITELIST = [
+    'rec skating',
+    'length swim'
+]
 
 
 def create_ics(events):
@@ -129,6 +134,7 @@ def get_events(num_days, categories, location, delay):
 
             time.sleep(delay)
             print('.', end='', flush=True)
+    print(' done')
 
 
 def create_daterange(days):
@@ -152,6 +158,9 @@ if __name__ == "__main__":
             days = int(sys.argv[i+1])
         if sys.argv[i] == '-s':
             seconds = int(sys.argv[i+1])
+    events = list(get_events(days, categories=[748, 754], location=-1, delay=seconds))
 
-    events = get_events(days, categories=[748, 754], location=-1, delay=seconds)
-    create_ics(events)
+    events_filtered = list(filter(lambda event: event['title'].lower() in EVENT_TITLE_WHITELIST, events))
+    print('Filtered {} down to {} events'.format(len(events), len(events_filtered)))
+
+    create_ics(events_filtered)
